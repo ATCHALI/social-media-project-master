@@ -1,0 +1,176 @@
+.profile-wrapper {
+  display: flex;
+  margin: 0;
+}
+
+.profile-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-photo {
+  z-index: -1;
+  background-image: url(https://raw.githubusercontent.com/avocadobravado/social-media-project-inspiration/master/background.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 350px;
+  width: 80vw; // COME BACK AND EDIT ME MAYBE
+}
+
+.profile-newsfeed {
+  width: 70%;
+}
+
+.friends-list {
+  width: 30%;
+  ul li a {
+    line-height: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+// PROFILE INFO AND PICTURE AREA
+
+.profile-picture {
+  margin-top: 1%;
+}
+
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  li {
+    margin: 20px;
+    display: inline;
+  }
+  .user-info {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75em;
+    color: #444;
+    letter-spacing: 0.03em;
+  }
+}
+
+.upload-photo-input {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid $light-green;
+  color: #444;
+  font-size: 18px;
+  padding-left: 5px;
+  margin-right: 5px;
+  transition: all .3s ease-in-out;
+  &:focus {
+   border: 1px solid $teal;
+   background-color: rgba(255, 255, 255, 0.65);
+  }
+}
+
+.profile-friends-wrapper {
+  display: flex;
+  .profile-status {
+    width: 350px;
+    height: 125px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid $light-green;
+    color: #444;
+    font-size: 18px;
+    padding-left: 5px;
+    margin-right: 5px;
+    transition: all .3s ease-in-out;
+    &:focus {
+     border: 1px solid $teal;
+     background-color: rgba(255, 255, 255, 0.65);
+    }
+    .profile-update-post {
+      background-color: $dark-blue;
+      border: none;
+      color: $yellow-green;
+      padding: 5px 15px;
+      font-size: 18px;
+      border-radius: 3px;
+
+      &:hover {
+       transition:.6s;
+       background-color: $teal;
+       color: white;
+      }
+    }
+  }
+  button {
+    background-color: $dark-blue;
+    border: none;
+    color: $yellow-green;
+    padding: 5px 15px;
+    font-size: 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    &:hover {
+     transition:.6s;
+     background-color: $teal;
+     color: white;
+    }
+
+  }
+  .profile-post-wrapper {
+    margin: 0 auto;
+    width: 40%;
+    min-width: 400px;
+  }
+}
+
+body > div > div > div.profile-friends-wrapper > div.profile-newsfeed > div > div.message-wrapper > div.comment-section > div.comment-like-wrapper > p:nth-child(1) > button.dislike {
+  background-color: transparent;
+  color: $dark-blue;
+  transition: all .3s ease-in-out;
+  &:hover {
+    transform: scale(1.5, 1.5);
+  }
+}
+
+body > div > div > div.profile-friends-wrapper > div.profile-newsfeed > div > div.message-wrapper > div.comment-section > div.comment-like-wrapper > p:nth-child(1) > button.like {
+  background-color: transparent;
+  color: $dark-blue;
+  transition: all .3s ease-in-out;
+  &:hover {
+    transform: scale(1.5, 1.5);
+  }
+}
+// FRIENDS
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ul {
+    display: flex;
+    flex-basis: 30%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  li {
+    margin: 5% 5%;
+  }
+  img {
+    margin: 0 auto;
+    transition: all 0.3s ease-in-out;
+    height: 50px;
+    width: 50px;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.upload-photo-form {
+  margin-top: 10px;
+}
+//

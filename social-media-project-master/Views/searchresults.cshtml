@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="/Content/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Content/css/main.css" media="screen" title="no title" charset="utf-8">
+    @if(Model.ContainsKey("search-query"))
+    {
+      <title>Search Results</title>
+    }
+    else
+    {
+      <title>Friends</title>
+    }
+  </head>
+  <body>
+    <!--MAIN NAVIGATION-->
+    <nav class="main-nav">
+      <div class="main-nav-wrapper">
+        <div class="logo">
+          <a href='/users/@Model["user"].Id/news'>
+            <img src="https://raw.githubusercontent.com/avocadobravado/social-media-project-inspiration/master/logo_sm_color.png" alt="" class="logo"/>
+          </a>
+        </div><!--LOGO ENDS-->
+        <div class="searchbar">
+          <form action='/users/@Model["user"].Id/search'>
+            <input type="text" name="search-query" value="" placeholder="Search" required>
+            <button type="submit" name="button" class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </form>
+        </div><!--SEARCHBAR ENDS-->
+        <ul>
+          <li><a href='/users/@Model["user"].Id/profile_view'>Hi, <span>@Model["user"].FirstName</span></a></li>
+          <li><a href="/">Sign out</a></li>
+        </ul>
+      </div><!--MAIN NAVIGATION WRAPPER-->
+    </nav><!--MAIN NAVIGATION ENDS-->
+    <nav class="sidebar">
+      <ul>
+        <li><a href='/users/@Model["user"].Id/profile_view'><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+        <li><a href='/users/@Model["user"].Id/profile_view'>My Profile</a></li>
+
+        <li><a href='/users/@Model["user"].Id/friends'><i class="fa fa-users fa-2x" aria-hidden="true"></i></a></li>
+        <li><a href='/users/@Model["user"].Id/friends'>Friends</a></li>
+
+        <li><a href='/users/@Model["user"].Id/profile/edit'><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a></li>
+        <li><a href='/users/@Model["user"].Id/profile/edit'>Edit Profile</a></li>
+      </ul>
+    </nav>
+    @if(Model.ContainsKey("search-query"))
+    {
+      <div class="results">
+        <h4 class="titles">Results</h4>
+        @if(Model["matches"].Count == 0)
+        {
+          <p>Your search yielded no results</p>
+        }
+        else
+        {
+          @foreach(var user in Model["matches"])
+          {
+            <div class="search-info">
+              <div class="image-and-name">
+                <div class="imageDiv"><img src="@user.ImgURL" alt="" class="user-image"/></div>
+                <span><a href='/users/@Model["user"].Id/profile_view/@user.Id'>@user.FirstName @user.LastName</a></span>
+              </div>
+            </div>
+          }
+        }
+    </div>
+    }
+    else if(Model.ContainsKey("friends"))
+    {
+      <div class="results">
+        <h4 class="titles">Your friends</h4>
+        @if(Model["friends"].Count == 0)
+        {
+          <p>Uh-oh, it appears you have no friends!</p>
+        }
+        else
+        {
+          @foreach(var user in Model["friends"])
+          {
+            <div class="search-info">
+              <div class="image-and-name">
+                <div class="imageDiv"><img src="@user.ImgURL" alt="" class="user-image"/></div>
+                <span><a href='/users/@Model["user"].Id/profile_view/@user.Id'>@user.FirstName @user.LastName</a></span>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    }
+  </body>
+</html>

@@ -1,0 +1,40 @@
+body {
+  font-size: 1.2em;
+  font-family: $primary-font;
+}
+
+a, li a {
+  text-decoration: none;
+}
+
+button {
+  font-family: $primary-font;
+}
+
+input {
+  font-family: $primary-font;
+}
+
+a {
+  color: $teal;
+}
+
+p {
+  color: #444;
+}
+
+li {
+  color: $dark-teal;
+}
+
+.titles {
+  margin-left: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: $dark-blue;
+}
+
+.friends-list h4 {
+  @extend .titles;
+  margin-left: 0;
+}

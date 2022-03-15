@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!--FONT AWESOME-->
+
+    <link rel="stylesheet" href="/Content/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Content/css/main.css" media="screen" title="no title" charset="utf-8">
+    <title>Placeholder Newsfeed</title>
+  </head>
+  <body>
+    <!--MAIN NAVIGATION-->
+    <nav class="main-nav">
+      <div class="main-nav-wrapper">
+        <div class="logo">
+          <a href='/users/@Model["user"].Id/news'>
+            <img src="https://raw.githubusercontent.com/avocadobravado/social-media-project-inspiration/master/logo_sm_color.png" alt="" class="logo"/>
+          </a>
+        </div><!--LOGO ENDS-->
+        <div class="searchbar">
+          <form action='/users/@Model["user"].Id/search'>
+            <input type="text" name="search-query" value="" placeholder="Search" required>
+            <button type="submit" name="button" class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </form>
+        </div><!--SEARCHBAR ENDS-->
+        <ul>
+          <li><a href='/users/@Model["user"].Id/profile_view'>Hi, <span>@Model["user"].FirstName</span></a></li>
+          <li><a href="/">Sign out</a></li>
+        </ul>
+      </div><!--MAIN NAVIGATION WRAPPER-->
+    </nav><!--MAIN NAVIGATION ENDS-->
+
+    <!-- NEWSFEED WRAPPER -->
+    <div class="newsfeed-wrapper">
+      <nav class="sidebar">
+        <ul>
+          <li><a href='/users/@Model["user"].Id/profile_view'><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+          <li><a href='/users/@Model["user"].Id/profile_view'>My Profile</a></li>
+
+          <li><a href='/users/@Model["user"].Id/friends'><i class="fa fa-users fa-2x" aria-hidden="true"></i></a></li>
+          <li><a href='/users/@Model["user"].Id/friends'>Friends</a></li>
+
+          <li><a href='/users/@Model["user"].Id/profile/edit'><i class="fa fa-cogs fa-2x" aria-hidden="true"></i></a></li>
+          <li><a href='/users/@Model["user"].Id/profile/edit'>Edit Profile</a></li>
+        </ul>
+      </nav><!--SIDEBAR NAV ENDS-->
+
+      <div class="newsfeed-posts">
+        <!--ADD A POST SECTION-->
+        <form class="update-post-form" action='/users/@Model["user"].Id/status' method="post">
+         <textarea wrap="hard" name="status" value="" class="status-input" placeholder="Write a post" required></textarea>
+         <button type="submit" name="button" class="update-post">Update</button>
+        </form>
+        <!--ADD A POST SECTION ENDS-->
+
+        @if(Model["timeline"].Count == 0)
+        {
+          <p>Your timeline is empty!</p>
+        }
+        else
+        {
+          @foreach(var status in @Model["timeline"])
+          {
+            <div class="comment-wrapper">
+              <div class="avatar-username">
+                <div class="static-avatar"><img src="@status.GetPosterImg()" alt="" class="user-image"/></div>
+                <div class="static-username">
+                  <a href='/users/@Model["user"].Id/profile_view/@status.UserId'>@status.GetPosterName()</a>
+                </div><!--STATIC USERNAME ENDS-->
+              </div><!--AVATAR USERNAME ENDS-->
+              <div class="message-wrapper">
+                <div class="static-message">
+                  <p>@status.Content</p>
+                </div><!--STATIC MESSAGE-->
+                <div class="underneath-message">
+                 <div class="like-dislikes-wrapper">
+                    <p class="like-dislikes">
+                      <span>@status.Likes</span><!--PLACEHOLDER/SPAN FOR NUMBER OF LIKES-->
+                      <form action='/users/@Model["user"].Id/statuses/@status.Id/like' method="post">
+                        <input type="hidden" name="redirect" value="news">
+                        <button class="like"> <i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                      </form>
+                      <span>@status.Dislikes</span><!--PLACEHOLDER/SPAN FOR NUMBER OF DISLIKES-->
+                      <form action='/users/@Model["user"].Id/statuses/@status.Id/dislike' method="post">      <!--NOTE WORK ON ME-->
+                        <input type="hidden" name="redirect" value="news">
+                        <button class="dislike"> <i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                      </form>
+                    </div>
+                  <p class="timestamp"><span>@status.Timestamp.ToString("d")</span>
+                  </p>
+                </div><!--UNDERNEATH MESSAGE ENDS-->
+
+                <div class="comment-section">
+                  @foreach(var comment in status.GetComments())
+                  {
+                    <!--FIRST COMMENT-->
+                    <div class="small-avatar-username">
+                      <div class="avatar-sm">
+                        <img src="@comment.GetCommenterImg()" alt="" class="sm-user-image"/>
+                      </div>
+                      <a href='/users/@Model["user"].Id/profile_view/@comment.UserId' class="newsfeed-username">@comment.GetCommenterName()</a>
+                    </div><!--SMALL AVATAR USERNAME ENDS-->
+
+                    <p>@comment.Content</p>
+                    <div class="comment-like-wrapper">
+                      <p>
+                        <span>@comment.Likes</span><!--PLACEHOLDER/SPAN FOR NUMBER OF LIKES-->
+                        <form action='/users/@Model["user"].Id/statuses/@status.Id/comments/@comment.Id/like' method="post">
+                          <input type="hidden" name="redirect" value="news">
+                          <button class="like"> <i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        </form>
+                        <span>@comment.Dislikes</span><!--PLACEHOLDER/SPAN FOR NUMBER OF DISLIKES-->
+                        <form action='/users/@Model["user"].Id/statuses/@status.Id/comments/@comment.Id/dislike' method="post">
+                          <input type="hidden" name="redirect" value="news">
+                          <button class="dislike"> <i class="fa fa-thumbs-down" aria-hidden="true"></i></button></p>
+                        </form>
+                      </p>
+                    </div><!--COMMENT LIKE WRAPPER ENDS-->
+                  }
+
+                  <form action='/users/@Model["user"].Id/statuses/@status.Id/comment' method="post">
+                    <textarea type="text" name="content" value="" class="comment-input" placeholder="Write a comment..." required></textarea>
+                    <button type="submit" name="button" class="submit-comment">Submit</button>
+                  </form>
+                </div><!--COMMENT SECTION ENDS-->
+              </div><!--MESSAGE WRAPPER ENDS-->
+
+            </div><!--COMMENT WRAPPER ENDS-->
+          }
+        }
+      </div><!--NEWSFEED POSTS ENDS-->
+    </div><!--NEWSFEED WRAPPER ENDS-->
+  </body>
+</html>
